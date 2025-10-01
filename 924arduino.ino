@@ -21,6 +21,10 @@
 
   https://docs.arduino.cc/built-in-examples/basics/Blink/
 */
+const int pushButton = 2;
+const int ledPin =3;
+
+int buttonState = 0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -32,16 +36,11 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  digitalWrite(3, HIGH); 
-  delay(250); 
-  digitalWrite(3, LOW);
-
-  digitalWrite(4, HIGH);
-  delay(250);
-  digitalWrite(4, LOW);
-
-  digitalWrite(5, HIGH);
-  delay(150);
-  digitalWrite(5, LOW);                 // wait for a second
-                      // wait for a second
+  buttonState = digitalRead(pushButton);
+  
+  if (buttonState == HIGH){
+    digitalWrite(ledPin, HIGH);
+  }  else{
+    digitalWrite(ledPin, LOW);
+  }
 }
