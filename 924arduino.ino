@@ -21,26 +21,94 @@
 
   https://docs.arduino.cc/built-in-examples/basics/Blink/
 */
-const int pushButton = 2;
-const int ledPin =3;
+const int buttonPin = 2;
+const int RedLedPin = 3;
+const int GreenLedPin = 4;
+const int BlueLedPin = 5;
 
 int buttonState = 0;
+int ledcolor = 0;
 
-// the setup function runs once when you press reset or power the board
+bool ButtonPressed = false;
+String currentcolor = "led";
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
+  pinMode(RedLedPin, OUTPUT);
+  pinMode(GreenLedPin, OUTPUT);
+  pinMode(BlueLedPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
 }
 
-// the loop function runs over and over again forever
 void loop() {
-  buttonState = digitalRead(pushButton);
+  buttonState = digitalRead(buttonPin);
+  Serial.print("Current Color ");
+  Serial.println(currentcolor);
+  if (buttonState == HIGH && !ButtonPressed) {
+    ledcolor = ledcolor + 1;
+    ButtonPressed = true;
+  }
+  if (buttonState == LOW && ButtonPressed) {
+    ButtonPressed = false;
+  }
+
+  if (ledcolor == 0) {
+    currentcolor = "LED OFF";
+    digitalWrite(RedLedPin, HIGH);
+    digitalWrite(GreenLedPin, HIGH);
+    digitalWrite(BlueLedPin, HIGH);
+  }
   
-  if (buttonState == HIGH){
-    digitalWrite(ledPin, HIGH);
-  }  else{
-    digitalWrite(ledPin, LOW);
+  else if (ledcolor == 1) {
+    currentcolor = "Red";
+    digitalWrite(RedLedPin, LOW);
+    digitalWrite(GreenLedPin, HIGH);
+    digitalWrite(BlueLedPin, HIGH);
+  }
+  
+  else if (ledcolor == 2) {
+    currentcolor = "Green";
+    digitalWrite(RedLedPin, HIGH);
+    digitalWrite(GreenLedPin, LOW);
+    digitalWrite(BlueLedPin, HIGH);
+  }
+  
+  else if (ledcolor == 3) {
+    currentcolor = "Blue";
+    digitalWrite(RedLedPin, HIGH);
+    digitalWrite(GreenLedPin, HIGH);
+    digitalWrite(BlueLedPin, LOW);
+  }
+  
+  else if (ledcolor == 4) {
+    currentcolor = "Yellow";
+    digitalWrite(RedLedPin, LOW);
+    digitalWrite(GreenLedPin, LOW);
+    digitalWrite(BlueLedPin, HIGH);
+  }
+
+  else if (ledcolor == 5) {
+    currentcolor = "Purple";
+    digitalWrite(RedLedPin, LOW);
+    digitalWrite(GreenLedPin, HIGH);
+    digitalWrite(BlueLedPin, LOW);
+  }
+  
+  else if (ledcolor == 6) {
+    currentcolor = "Cyan";
+    digitalWrite(RedLedPin, HIGH);
+    digitalWrite(GreenLedPin, LOW);
+    digitalWrite(BlueLedPin, LOW);
+  }
+  
+  else if (ledcolor == 7) {
+    currentcolor = "White";
+    digitalWrite(RedLedPin, LOW);
+    digitalWrite(GreenLedPin, LOW);
+    digitalWrite(BlueLedPin, LOW);
+  }
+  
+  else if (ledcolor == 8) {
+    ledcolor = 0;
   }
 }
